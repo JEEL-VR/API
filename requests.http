@@ -1,2 +1,2 @@
 ###
-GET http://localhost:9000/api/users HTTP/1.1
+GET https://classvr-room-api.herokuapp.com/api/users HTTP/1.1

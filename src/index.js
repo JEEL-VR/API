@@ -10,7 +10,7 @@ const port = process.env.PORT || 9000;
 
 // routes
 app.get("/", (req, res) =>{
-    res.send('Welcome to my API');
+    res.send('<h2>Welcome to ClassVRroom API!</h2><br><p>For more information please visit this <a href="https://github.com/JEEL-VR/API">Github</a> repository.</p>');
 });
 
 // middleware
