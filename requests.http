@@ -1,2 +1,375 @@
 ###
-GET https://classvr-room-api.herokuapp.com/api/users HTTP/1.1
+GET http://localhost:9000/api/students HTTP/1.1
+
+###
+POST http://localhost:9000/api/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Alex",
+    "age": 22,
+    "email": "alexlarios@gmail.com"
+}
+
+###
+POST http://localhost:9000/api/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Jose",
+    "age": 26,
+    "email": "joserosillo@gmail.com"
+}
+
+###
+POST http://localhost:9000/api/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Edgar",
+    "age": 20,
+    "email": "edgarsanou@gmail.com"
+}
+
+###
+POST http://localhost:9000/api/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Eric",
+    "age": 21,
+    "email": "ericgimenez@gmail.com"
+}
+
+
+###
+GET http://localhost:9000/api/students/622de07ab340d838baea7d08 HTTP/1.1
+
+###
+PUT http://localhost:9000/api/students/622de07ab340d838baea7d08 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Eric",
+    "age": 19,
+    "email": "ericgimenez@gmail.com"
+}
+
+###
+DELETE http://localhost:9000/api/students/622de07ab340d838baea7d08 HTTP/1.1
+
+
+###
+POST http://localhost:9000/api/teachers HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Leandro",
+    "age": 28,
+    "email": "leandrozabala@gmail.com"
+}
+
+###
+POST http://localhost:9000/api/teachers HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Enric",
+    "age": 29,
+    "email": "enricmieza@gmail.com"
+}
+
+###
+GET http://localhost:9000/api/teachers HTTP/1.1
+
+
+###
+POST http://localhost:9000/api/courses HTTP/1.1
+Content-Type: application/json
+
+{
+	"title": "Curso 1",
+	"description": "Movilizaciones 1o A",
+	"subscribers": {
+		"teachers": [101, 102],
+		"students": [1, 2, 3, 4]
+	},
+	"elements": [{
+			"ID": 1,
+			"type": "HTML",
+			"title": "Traslado de pacientes",
+			"description": "Información sobre el traslado de pacientes",
+			"order": 1,
+			"contents": "<h1>Apuntes de traslado de pacientes</h1><p>El traslado ...</p>"
+		},
+		{
+			"ID": 2,
+			"type": "file",
+			"title": "Primeros auxilios",
+			"description": "Información sobre primeros auxilios",
+			"order": 2,
+			"file": "file:///media/apuntes.pdf"
+		}
+	],
+	"tasks": [{
+			"ID": 3,
+			"type": "file",
+			"title": "Cambio a postura lateral",
+			"description": "Inmovilización de pacientes en cama",
+			"order": 1,
+			"uploads": [{
+					"studentID": 1,
+					"text": "Entrega del ejercicio 1",
+					"file": "Ejercicio1-lola.pdf",
+					"grade": 8,
+					"feedback": "Buen trabajo"
+				},
+				{
+					"studentID": 2,
+					"text": "Entrega del ejercicio 1",
+					"file": "Ejercicio1-pepe.pdf",
+					"grade": 6,
+					"feedback": "Buen trabajo"
+				}
+			]
+		},
+		{
+			"ID": 4,
+			"type": "HTML",
+			"title": "Cambio a postura frontal",
+			"description": "Inmovilización de pacientes en cama de manera frontal",
+			"order": 2,
+			"uploads": [{
+					"studentID": 3,
+					"text": "loren ipsum dolo sit amet...",
+					"grade": 5,
+					"feedback": "Hay que mejorar"
+				},
+				{
+					"studentID": 4,
+					"text": "lorem ipsum chiquito de la calzada...",
+					"grade": 3,
+					"feedback": "Hay que mejorar"
+				}
+			]
+		}
+	],
+	"vr_tasks": [{
+			"ID": 5,
+			"title": "Movilización hacia el borde de la cama",
+			"descripcion": "lorem ipsum movilización borde de la cama",
+			"VRexID": 22,
+			"versionID": 26,
+			"pollID": 1,
+			"completions": [{
+					"studentID": 1,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 5,
+						"failed_items": 3,
+						"comments": "...to be decided..."
+					},
+					"grade": 7,
+					"feedback": "Mala postura lateral, riesgo de esguince"
+				},
+				{
+					"studentID": 2,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 6,
+						"failed_items": 2,
+						"comments": "...to be decided..."
+					},
+					"grade": 8,
+					"feedback": "Buena postura lateral, mejora tobillo"
+				}
+			]
+		},
+		{
+			"ID": 6,
+			"title": "Movilización al cabecero de la cama",
+			"descripcion": "lorem impsum movilización cabecero",
+			"VRexID": 22,
+			"versionID": 26,
+			"pollID": 1,
+			"completions": [{
+					"studentID": 1,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 1,
+						"failed_items": 7,
+						"comments": "...to be decided..."
+					},
+					"grade": 2,
+					"feedback": "Mala posición lumbares. Pasos incompletos."
+				},
+				{
+					"studentID": 2,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 6,
+						"failed_items": 2,
+						"comments": "...to be decided..."
+					},
+					"grade": 8,
+					"feedback": "Buena postura frontal, mejora tobillo, riesgo de esguince"
+				}
+			]
+		}
+
+	]
+}
+
+
+###
+POST http://localhost:9000/api/courses HTTP/1.1
+Content-Type: application/json
+
+{
+	
+	"title": "Curso 2",
+	"description": "Movilizaciones 2o B",
+	"subscribers": {
+		"teachers": [103, 104],
+		"students": [11, 12, 13, 14]
+	},
+	"elements": [{
+			"ID": 11,
+			"type": "HTML",
+			"title": "Traslado de pacientes",
+			"description": "Información sobre el traslado de pacientes",
+			"order": 1,
+			"contents": "<h1>Apuntes de traslado de pacientes</h1><p>El traslado lorm impsum...</p>"
+		},
+		{
+			"ID": 12,
+			"type": "file",
+			"title": "Primeros auxilios",
+			"description": "Información sobre primeros auxilios",
+			"order": 2,
+			"file": "file:///media/apuntes.pdf"
+		}
+	],
+	"tasks": [{
+			"ID": 13,
+			"type": "file",
+			"title": "Cambio a postura lateral",
+			"description": "Inmovilización de pacientes en cama",
+			"order": 1,
+			"uploads": [{
+					"studentID": 11,
+					"text": "no está acabado pero lo subo ya",
+					"file": "file:///media/Ejercicio1-nacho.pdf",
+					"grade": 8,
+					"feedback": "Buen trabajo"
+				},
+				{
+					"studentID": 12,
+					"text": "Entrega del ejercicio 1",
+					"file": "Ejercicio1-pepe.pdf",
+					"grade": 6,
+					"feedback": "Buen trabajo"
+				}
+			]
+		},
+		{
+			"ID": 14,
+			"type": "HTML",
+			"title": "Cambio a postura frontal",
+			"description": "Inmovilización de pacientes en cama de manera frontal",
+			"order": 2,
+			"uploads": [{
+					"studentID": 13,
+					"text": "loren ipsum dolo sit amet...",
+					"grade": 5,
+					"feedback": "Hay que mejorar"
+				},
+				{
+					"studentID": 12,
+					"text": "lorem ipsum chiquito de la calzada...",
+					"grade": 3,
+					"feedback": "Hay que mejorar"
+				}
+			]
+		}
+	],
+	"vr_tasks": [{
+			"ID": 15,
+			"title": "Movilización hacia el borde de la cama",
+			"descripcion": "lorem ipsum movilización borde de la cama",
+			"VRexID": 22,
+			"versionID": 26,
+			"pollID": 1,
+			"completions": [{
+					"studentID": 11,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 5,
+						"failed_items": 3,
+						"comments": "...to be decided..."
+					},
+					"grade": 7,
+					"feedback": "Mala postura lateral, riesgo de esguince"
+				},
+				{
+					"studentID": 12,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 6,
+						"failed_items": 2,
+						"comments": "...to be decided..."
+					},
+					"grade": 8,
+					"feedback": "Buena postura lateral, mejora tobillo"
+				}
+			]
+		},
+		{
+			"ID": 16,
+			"title": "Movilización al cabecero de la cama",
+			"descripcion": "lorem impsum movilización cabecero",
+			"VRexID": 22,
+			"versionID": 26,
+			"pollID": 1,
+			"completions": [{
+					"studentID": 11,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 1,
+						"failed_items": 7,
+						"comments": "...to be decided..."
+					},
+					"grade": 2,
+					"feedback": "Mala posición lumbares. Pasos incompletos."
+				},
+				{
+					"studentID": 14,
+					"position_data": {
+						"data": "...to be decided..."
+					},
+					"autograde": {
+						"passed_items": 6,
+						"failed_items": 2,
+						"comments": "...to be decided..."
+					},
+					"grade": 8,
+					"feedback": "Buena postura frontal, mejora tobillo, riesgo de esguince"
+				}
+			]
+		}
+	]
+}
