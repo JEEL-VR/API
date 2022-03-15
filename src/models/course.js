@@ -12,12 +12,12 @@ const courseSchema = mongoose.Schema({
     "subscribers": {
       "teachers": {
         "type": [
-          "Number"
+          "Mixed"
         ]
       },
       "students": {
         "type": [
-          "Number"
+          "Mixed"
         ]
       }
     },
