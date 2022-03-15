@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/login',  async (req, res, next) => {
     
     try {
-        const userLogin = req.body;
+        const userLogin = req.query;
     
         // Check if username is provided
         if (!userLogin.username) {
@@ -88,7 +88,7 @@ router.get('/login',  async (req, res, next) => {
 // Logout {token}
 router.get('/logout',  async (req, res, next) => {
     try {
-        const userLogout = req.body;
+        const userLogout = req.query;
         
         // Check if session_token is provided
         if (!userLogout.token) {
