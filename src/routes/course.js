@@ -5,7 +5,7 @@ const router = express.Router();
 
 // create course
 router.post('/courses', (req, res) => {
-    const course = courseSchema(req.body);
+    const course = courseSchema(req.query);
     course.save()
     .then((data) => res.json(data))
     .catch((error) => res.json({message: error}))
