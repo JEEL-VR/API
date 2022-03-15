@@ -230,7 +230,7 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:9000/api/courses HTTP/1.1
+POST https://classvr-room-api.herokuapp.com/api/courses HTTP/1.1
 Content-Type: application/json
 
 {
@@ -394,4 +394,22 @@ Content-Type: application/json
 
 {
 	"token": "joserosillo"
+}
+
+###
+GET http://localhost:9000/api/get_courses HTTP/1.1
+Content-Type: application/json
+
+{
+	"token": "iatti8vaqy5on404h7qyb"
+}
+
+
+###
+GET http://localhost:9000/api/get_course_details HTTP/1.1
+Content-Type: application/json
+
+{
+	"token": "iatti8vaqy5on404h7qyb",
+	"course_id": "622e37a987d3c0393ed98672"
 }
