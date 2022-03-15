@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const studentRoutes = require('./routes/student')
 const teacherRoutes = require('./routes/teacher')
 const courseRoutes = require('./routes/course')
+const userRoutes = require('./routes/users')
 
 // environment variables
 require('dotenv').config();
@@ -17,7 +18,7 @@ app.get("/", (req, res) =>{
 
 // middleware
 app.use(express.json())
-app.use('/api', studentRoutes, teacherRoutes, courseRoutes);
+app.use('/api', studentRoutes, teacherRoutes, courseRoutes, userRoutes);
 
 
 // mongodb connection
