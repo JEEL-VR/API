@@ -5,7 +5,7 @@ const router = express.Router();
 
 // create student
 router.post('/students', (req, res) => {
-    const student = studentSchema(req.body);
+    const student = studentSchema(req.query);
     student.save()
     .then((data) => res.json(data))
     .catch((error) => res.json({message: error}))
@@ -31,7 +31,7 @@ router.get('/students/:id', (req, res) => {
 // update student
 router.put('/students/:id', (req, res) => {
     const {id} = req.params;
-    const { name, age, email} = req.body;
+    const { name, age, email} = req.query;
     studentSchema
     .updateOne({_id: id}, { $set: { name, age, email}})
     .then((data) => res.json(data))
