@@ -78,7 +78,7 @@ router.get('/get_course_details',  async (req, res, next) => {
                 next(new Error('course_id is required'))
             }
 
-            const userDb = await userSchema.findOne({token: userCourseAuth.token}).exec();
+            const userDb = await userSchema.findOne({token: userCourseAuth.session_token}).exec();
             
             // Check if token in Mongo Database
             if (userDb == null) {
