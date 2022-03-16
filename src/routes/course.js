@@ -18,13 +18,13 @@ router.get('/get_courses',  async (req, res, next) => {
             const userAuthentication = req.query;
             
             // Check if session_token is provided
-            if (!userAuthentication.token) {
+            if (!userAuthentication.session_token) {
                 res.status(401)
-                next(new Error('token is required'))
+                next(new Error('session_token is required'))
             }
-            console.log(userAuthentication.token);
+            console.log(userAuthentication.session_token);
 
-            const userDb = await userSchema.findOne({token: userAuthentication.token}).exec();
+            const userDb = await userSchema.findOne({token: userAuthentication.session_token}).exec();
             
             // Check if token in Mongo Database
             if (userDb == null) {
@@ -67,11 +67,11 @@ router.get('/get_course_details',  async (req, res, next) => {
             const userCourseAuth = req.query;
             
             // Check if session_token is provided
-            if (!userCourseAuth.token) {
+            if (!userCourseAuth.session_token) {
                 res.status(401)
-                next(new Error('token is required'))
+                next(new Error('session_token is required'))
             }
-            console.log(userCourseAuth.token);
+            console.log(userCourseAuth.session_token);
 
             if (!userCourseAuth.course_id) {
                 res.status(401)
@@ -102,17 +102,19 @@ router.get('/get_course_details',  async (req, res, next) => {
 
             console.log("Token correct")
 
-            // Courses from selected student
+            //Check if course id format is correct
             try {
-
+                
                 const userCourse = await courseSchema.findById( userCourseAuth.course_id).exec();
             }catch{
                 res.status(401)
                 next(new Error('Invalid id format'))
             }
             
+            // Courses from selected student
             const userCourse = await courseSchema.findById( userCourseAuth.course_id).exec();
-            //Check if course id existsSync
+            
+            //Check if course id exists
             if (!userCourse) {
                 res.status(401)
                 next(new Error('Invalid course id'))
