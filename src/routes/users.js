@@ -42,7 +42,7 @@ router.get('/login',  async (req, res, next) => {
         const expirationTimeDb = new Date(userDb.expiration_time).getTime()
         const currentTime = new Date().getTime();
         
-        // TODO: Check if the user has token in Mongo Database
+        // TODO: Check if the user has token in Mongo Database and expiration_time
         if(!userDb.token || !userDb.expiration_time || expirationTimeDb < currentTime) {
             
             // creates new token
@@ -64,13 +64,6 @@ router.get('/login',  async (req, res, next) => {
         }
 
         console.log("Token present")
-    
-
-            // TODO: Check if the user token expiration_time is valid
-
-                // TODO: Generate token and expiration_time
-        
-
         
         const userDbWithToken = await userSchema.findOne({username: userLogin.username}).exec();
         console.log("new user with token")
