@@ -401,7 +401,7 @@ GET http://localhost:9000/api/get_courses HTTP/1.1
 Content-Type: application/json
 
 {
-	"token": "iatti8vaqy5on404h7qyb"
+	"session_token": "8neqxhmaiowtv1sqm9732"
 }
 
 
