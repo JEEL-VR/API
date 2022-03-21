@@ -147,6 +147,51 @@ router.get('/get_course_details',  async (req, res, next) => {
 });
 
 
+
+// GET Courses {token}
+router.get('/export_database',  async (req, res, next) => {
+    try {
+
+        const userLogin = req.query;
+    
+        // Check if username is provided
+        if (!userLogin.username) {
+            res.status(401)
+            next(new Error('Username is required'))
+        }
+        console.log(userLogin.username);
+
+        const userDb = await userSchema.findOne({username: userLogin.username}).exec();
+        console.log(userDb)   
+        console.log(userDb.username)
+        
+        // Check if username in Mongo Database
+        if (userDb == null) {
+            res.status(401)
+            next(new Error('No user with this username'))
+        }
+        console.log("Username correct")
+
+        // Check if password is correct
+        if(userLogin.password == null || userLogin.password != userDb.password) {
+            res.status(401)
+            throw next( new Error('Wrong credentials'))
+            
+        }
+        console.log("Password correct")
+
+        // Courses
+        const allCourses = await courseSchema.find().exec();
+        console.log(allCourses)
+        
+        // Returns courses
+        res.status(200).json(allCourses);
+        
+        }catch(e){
+            console.log(e)
+    }
+});
+
 // delete course
 router.delete('/courses/:id', (req, res) => {
     const {id} = req.params;
