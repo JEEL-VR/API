@@ -49,7 +49,7 @@ router.get('/get_courses',  async (req, res, next) => {
             console.log("Token correct")
 
             // Courses from selected student
-            const userCourses = await courseSchema.find({'subscribers.students': { $gte: userDb.id}}).exec();
+            const userCourses = await courseSchema.find({'subscribers.students': { $gte: userDb.id}}).select('title description subscribers.students').exec();
             console.log(userCourses)
             
             // Returns courses
@@ -73,9 +73,9 @@ router.get('/get_course_details',  async (req, res, next) => {
             }
             console.log(userCourseAuth.session_token);
 
-            if (!userCourseAuth.course_id) {
+            if (!userCourseAuth.courseID) {
                 res.status(401)
-                next(new Error('course_id is required'))
+                next(new Error('courseID is required'))
             }
 
             const userDb = await userSchema.findOne({token: userCourseAuth.session_token}).exec();
@@ -105,14 +105,14 @@ router.get('/get_course_details',  async (req, res, next) => {
             //Check if course id format is correct
             try {
                 
-                const userCourse = await courseSchema.findById( userCourseAuth.course_id).exec();
+                const userCourse = await courseSchema.findById( userCourseAuth.courseID).exec();
             }catch{
                 res.status(401)
                 next(new Error('Invalid id format'))
             }
             
             // Courses from selected student
-            const userCourse = await courseSchema.findById( userCourseAuth.course_id).exec();
+            const userCourse = await courseSchema.findById( userCourseAuth.courseID).exec();
             
             //Check if course id exists
             if (!userCourse) {
