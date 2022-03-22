@@ -12,26 +12,25 @@ router.get('/login',  async (req, res, next) => {
     
         // Check if username is provided
         if (!userLogin.username) {
-            res.status(401)
+            res.status(401).send({error : 'Username is required'});
             next(new Error('Username is required'))
         }
         console.log(userLogin.username);
 
         const userDb = await userSchema.findOne({username: userLogin.username}).exec();
-        console.log(userDb)   
-        console.log(userDb.username)
         
-
+        
         // Check if username in Mongo Database
         if (userDb == null) {
-            res.status(401)
-            next(new Error('No user with this username'))
+            res.status(401).send({error : 'No user with that username'});
+            next(new Error('No user with that username'))
         }
         console.log("Username correct")
+        
 
         // Check if password is correct
         if(userLogin.password == null || userLogin.password != userDb.password) {
-            res.status(401)
+            res.status(401).send({error : 'Wrong credentials'});
             throw next( new Error('Wrong credentials'))
             
         }
@@ -63,11 +62,7 @@ router.get('/login',  async (req, res, next) => {
             await userSchema.updateOne({username: userLogin.username},{token: token(), expiration_time: newDateObj.getTime()});
         }
 
-        console.log("Token present")
-        
         const userDbWithToken = await userSchema.findOne({username: userLogin.username}).exec();
-        console.log("new user with token")
-
 
         // Returns token
         res.status(200).json(userDbWithToken.token);
@@ -85,17 +80,16 @@ router.get('/logout',  async (req, res, next) => {
         
         // Check if session_token is provided
         if (!userLogout.token) {
-            res.status(401)
+            res.status(401).send({error : 'session_token is required'});
             next(new Error('session_token is required'))
         }
         console.log(userLogout.token);
 
-        const userDb = await userSchema.findOne({token: userLogout.token}).exec();
-        console.log(userDb)   
+        const userDb = await userSchema.findOne({token: userLogout.token}).exec();  
 
         // Check if token in Mongo Database
         if (userDb == null) {
-            res.status(401)
+            res.status(401).send({error : 'No user with this token'});
             next(new Error('No user with this token'))
         }
         console.log("Token correct")

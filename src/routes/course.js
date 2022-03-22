@@ -19,7 +19,7 @@ router.get('/get_courses',  async (req, res, next) => {
             
             // Check if session_token is provided
             if (!userAuthentication.session_token) {
-                res.status(401)
+                res.status(401).send({error : 'session_token is required'});
                 next(new Error('session_token is required'))
             }
             console.log(userAuthentication.session_token);
@@ -28,7 +28,7 @@ router.get('/get_courses',  async (req, res, next) => {
             
             // Check if token in Mongo Database
             if (userDb == null) {
-                res.status(401)
+                res.status(401).send({error : 'No user with this token'});
                 next(new Error('No user with this token'))
             }
             
@@ -41,7 +41,7 @@ router.get('/get_courses',  async (req, res, next) => {
 
             // Check if session_token has expired
             if (expirationTimeDb < currentTime) {
-                res.status(401)
+                res.status(401).send({error : 'Token Authentication has expired'});
                 next(new Error('Token Authentication has expired'))
             }
 
@@ -49,7 +49,7 @@ router.get('/get_courses',  async (req, res, next) => {
             console.log("Token correct")
 
             // Courses from selected student
-            const userCourses = await courseSchema.find({'subscribers.students': { $gte: userDb.id}}).select('title description subscribers.students').exec();
+            const userCourses = await courseSchema.find({'subscribers.students': userDb.id}).select('title description subscribers.students').exec();
             console.log(userCourses)
             
             // Returns courses
@@ -68,13 +68,13 @@ router.get('/get_course_details',  async (req, res, next) => {
             
             // Check if session_token is provided
             if (!userCourseAuth.session_token) {
-                res.status(401)
+                res.status(401).send({error : 'session_token is required'});
                 next(new Error('session_token is required'))
             }
             console.log(userCourseAuth.session_token);
 
             if (!userCourseAuth.courseID) {
-                res.status(401)
+                res.status(401).send({error : 'courseID is required'});
                 next(new Error('courseID is required'))
             }
 
@@ -82,7 +82,7 @@ router.get('/get_course_details',  async (req, res, next) => {
             
             // Check if token in Mongo Database
             if (userDb == null) {
-                res.status(401)
+                res.status(401).send({error : 'No user with this token'});
                 next(new Error('No user with this token'))
             }
             
@@ -95,7 +95,7 @@ router.get('/get_course_details',  async (req, res, next) => {
 
             // Check if session_token has expired
             if (expirationTimeDb < currentTime) {
-                res.status(401)
+                res.status(401).send({error : 'Token Authentication has expired'});
                 next(new Error('Token Authentication has expired'))
             }
 
@@ -107,7 +107,7 @@ router.get('/get_course_details',  async (req, res, next) => {
                 
                 const userCourse = await courseSchema.findById( userCourseAuth.courseID).exec();
             }catch{
-                res.status(401)
+                res.status(401).send({error : 'Invalid id format'});
                 next(new Error('Invalid id format'))
             }
             
@@ -116,7 +116,7 @@ router.get('/get_course_details',  async (req, res, next) => {
             
             //Check if course id exists
             if (!userCourse) {
-                res.status(401)
+                res.status(401).send({error : 'Invalid course id'});
                 next(new Error('Invalid course id'))
             }
             else {
@@ -129,7 +129,7 @@ router.get('/get_course_details',  async (req, res, next) => {
                 console.log(studentSubscriber)
 
                 if (studentSubscriber == -1) {
-                    res.status(401)
+                    res.status(401).send({error : 'not a student subscriber of this course'});
                     next(new Error('not a student subscriber of this course'))
                 }else{
 
@@ -156,25 +156,23 @@ router.get('/export_database',  async (req, res, next) => {
     
         // Check if username is provided
         if (!userLogin.username) {
-            res.status(401)
+            res.status(401).send({error : 'Username is required'});
             next(new Error('Username is required'))
         }
         console.log(userLogin.username);
 
         const userDb = await userSchema.findOne({username: userLogin.username}).exec();
-        console.log(userDb)   
-        console.log(userDb.username)
         
         // Check if username in Mongo Database
         if (userDb == null) {
-            res.status(401)
+            res.status(401).send({error : 'No user with this username'});
             next(new Error('No user with this username'))
         }
         console.log("Username correct")
 
         // Check if password is correct
         if(userLogin.password == null || userLogin.password != userDb.password) {
-            res.status(401)
+            res.status(401).send({error : 'Wrong credentials'});
             throw next( new Error('Wrong credentials'))
             
         }
