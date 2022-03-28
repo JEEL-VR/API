@@ -13,7 +13,7 @@ router.get('/login',  async (req, res, next) => {
         // Check if username is provided
         if (!userLogin.username) {
             res.status(401).send({error : 'Username is required'});
-            next(new Error('Username is required'))
+            return next(new Error('Username is required'))
         }
         console.log(userLogin.username);
 
@@ -23,7 +23,7 @@ router.get('/login',  async (req, res, next) => {
         // Check if username in Mongo Database
         if (userDb == null) {
             res.status(401).send({error : 'No user with that username'});
-            next(new Error('No user with that username'))
+            return next(new Error('No user with that username'))
         }
         console.log("Username correct")
         
@@ -31,7 +31,7 @@ router.get('/login',  async (req, res, next) => {
         // Check if password is correct
         if(userLogin.password == null || userLogin.password != userDb.password) {
             res.status(401).send({error : 'Wrong credentials'});
-            throw next( new Error('Wrong credentials'))
+            return next( new Error('Wrong credentials'))
             
         }
         console.log("Password correct")
