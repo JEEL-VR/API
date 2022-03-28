@@ -20,7 +20,7 @@ router.get('/get_courses',  async (req, res, next) => {
             // Check if session_token is provided
             if (!userAuthentication.session_token) {
                 res.status(401).send({error : 'session_token is required'});
-                next(new Error('session_token is required'))
+                return next(new Error('session_token is required'))
             }
             console.log(userAuthentication.session_token);
 
@@ -29,7 +29,7 @@ router.get('/get_courses',  async (req, res, next) => {
             // Check if token in Mongo Database
             if (userDb == null) {
                 res.status(401).send({error : 'No user with this token'});
-                next(new Error('No user with this token'))
+                return next(new Error('No user with this token'))
             }
             
             console.log(userDb)
