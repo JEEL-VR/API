@@ -450,8 +450,8 @@ GET http://localhost:9000/api/pin_request HTTP/1.1
 Content-Type: application/json
 
 {
-	"session_token": "pzp57x6eohk09ch1hagha1n",
-	"VRtaskID": 
+	"session_token": "cdd1bo5aapllchkv7ibjm",
+	"VRtaskID": 5
     //"pin": "0001",
     //"username": "joserosillo",
     //"vr_task_id": 13

@@ -35,6 +35,8 @@ router.get('/pin_request', async (req, res, next) => {
             return next(new Error('Incorrect session token'))
         }
 
+        console.log(userDb)
+
         // Check if token has expired
         
         // Date values
@@ -52,10 +54,25 @@ router.get('/pin_request', async (req, res, next) => {
             return next(new Error('VRtaskID is required'))
         }
 
+        // Conver VRTaskID to integer
+        userPinRequest_VRtaskID = -1
+
+        try {
+            userPinRequest_VRtaskID = parseInt(userPinRequest.VRtaskID)
+        } catch (error) {
+            res.status(401).send({error : 'Not a valid VRtaskID'});
+            return next(new Error('Not a valid VRtaskID'))
+        }
+
+        userDb.id
+
+        console.log(userPinRequest_VRtaskID)
 
         // Check if student is subscribed to this vr_task
-        const courseDB = await courseSchema.findOne({"vr_tasks.ID": userPinRequest.VRtaskID, "subscribers.students": userDb.id}).exec();
-        
+        const courseDB = await courseSchema.findOne({"vr_tasks.ID": userPinRequest_VRtaskID, "subscribers.students": userDb.id}).exec();
+        console.log(courseDB)
+        console.log(userPinRequest_VRtaskID)
+        console.log(userDb.id)
         if(courseDB == null){
             res.status(401).send({error : 'Not suscribed to this VRtaskID'});
             return next(new Error('Not suscribed to this VRtaskID'))
@@ -70,7 +87,7 @@ router.get('/pin_request', async (req, res, next) => {
         for (var k in vrTask){
             let vr_task_id = vrTask[k].ID
             
-            if (vr_task_id == userPinRequest.VRtaskID) {
+            if (vr_task_id == userPinRequest_VRtaskID) {
                 vr_exercise_id = vrTask[k].VRexID
                 console.log("vr_task_id = " + vr_task_id + " : vr_exercise_id = " + vr_exercise_id)
                 break
@@ -106,12 +123,12 @@ router.get('/pin_request', async (req, res, next) => {
         console.log(randomPin + " pin valid")
         
         // Check if there is already a pin generated in the VR_task of this user
-        const pinDB = await pinSchema.findOne({vr_task_id: userPinRequest.VRtaskID, username: userDb.username}).exec();
+        const pinDB = await pinSchema.findOne({vr_task_id: userPinRequest_VRtaskID, username: userDb.username}).exec();
 
         if(pinDB == null){
             
             // Creates new pin document
-            const newPinDocument = pinSchema({pin: randomPin, username: userDb.username, vr_task_id: userPinRequest.VRtaskID, vr_exercise_id: vr_exercise_id });
+            const newPinDocument = pinSchema({pin: randomPin, username: userDb.username, vr_task_id: userPinRequest_VRtaskID, vr_exercise_id: vr_exercise_id });
             
             // Save new document into pins collection
             newPinDocument.save();
