@@ -261,7 +261,7 @@ router.post('/finish_vr_exercise', async (req, res, next) => {
         await courseSchema.findOneAndUpdate({'subscribers.students': userDb.id, 'vr_tasks.ID': pinDb.vr_task_id, 'vr_tasks.VRexID': pinDb.vr_exercise_id},
                                         {'$push': { [`vr_tasks.${counter}.completions`] : exercise}}).exec();
         
-        res.status(200).send("Exercise data successfully updated");        
+        res.status(200).send({Succes:"Exercise data updated"});        
         
         }catch(e){
             console.log(e)
