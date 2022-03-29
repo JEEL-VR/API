@@ -472,7 +472,7 @@ POST http://localhost:9000/api/finish_vr_exercise HTTP/1.1
 Content-Type: application/json
 
 {
-	"pin": 7906,
+	"pin": 9095,
 	"record": {"passed_items":4, 
 			   "failed_items":3, 
 			   "grade":80},
