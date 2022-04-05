@@ -126,20 +126,36 @@ router.get('/get_course_details',  async (req, res, next) => {
                 let studentsSubscribers = userCourse.subscribers.students;
 
                 let studentSubscriber =  studentsSubscribers.indexOf(userDb.id)
-                console.log(studentSubscriber)
+                console.log("Student subscriber: " + studentSubscriber)
 
                 if (studentSubscriber == -1) {
                     res.status(401).send({error : 'not a student subscriber of this course'});
                     next(new Error('not a student subscriber of this course'))
                 }else{
-
+                    
+                    // Filter vr_tasks completions by user id
+                    parseJson = JSON.parse(JSON.stringify(userCourse));
+                    for (var k in parseJson){
+                        if (k == "vr_tasks") {
+                            for (var e in parseJson[k]){
+                                for (var completions in parseJson[k][e]){
+                                    for ( var completion in parseJson[k][e][completions])
+                                    if (parseJson[k][e][completions][completion].studentID) {
+                                        if (parseJson[k][e][completions][completion].studentID != userDb.id) {
+                                            delete userCourse[k][e][completions][completion];
+                                            console.log("Completion deleted");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    
+                    // Returns course
                     res.status(200).json(userCourse);
+                    console.log("Course provided successfully");
                 }
             }
-
-            console.log(userCourse.subscribers.students)
-            
-            // Returns course
         
         }catch(e){
             console.log(e)
